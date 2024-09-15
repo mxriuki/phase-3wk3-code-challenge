@@ -8,8 +8,9 @@ class TestBand:
 
     def test_has_name_hometown(self):
         '''has the name and hometown passed into __init__().'''
-        Band(name='boygenius', hometown='NYC')
-
+        band = Band(name='boygenius', hometown='NYC')
+        assert band.name == 'boygenius'
+        assert band.hometown == 'NYC'
 
     def test_name_hometown_are_strings(self):
         '''Name and hometown must be strings.'''
@@ -23,23 +24,23 @@ class TestBand:
         band = Band(name='boygenius', hometown='NYC')
         venue = Venue(title="Theatre", city='NYC')
         venue2 = Venue(title="Ace of Spades", city='SAC')
-        band.play_in_venue(venue= venue, date= 'Nov 22')
+        band.play_in_venue(venue=venue, date='Nov 22')
 
-        assert len(band.concerts) == 1
-        assert band.concerts[0].band == band 
-        assert band.concerts[0].venue == venue 
-        band.play_in_venue(venue= venue2, date= 'Nov 27')
-        assert len(band.concerts) == 2
-        assert band.concerts[1].band == band 
-        assert band.concerts[1].venue == venue2
+        assert len(band.concerts()) == 1  # Changed to method call
+        assert band.concerts()[0].band == band 
+        assert band.concerts()[0].venue == venue 
+        band.play_in_venue(venue=venue2, date='Nov 27')
+        assert len(band.concerts()) == 2  # Changed to method call
+        assert band.concerts()[1].band == band 
+        assert band.concerts()[1].venue == venue2
 
     def test_all_introductions(self):
         '''returns all introductions for the band'''
         band = Band(name='boygenius', hometown='NYC')
         venue = Venue(title="Theatre", city='NYC')
         venue2 = Venue(title="Ace of Spades", city='SAC')
-        band.play_in_venue(venue= venue, date= 'Nov 22')
-        band.play_in_venue(venue= venue2, date= 'Nov 27')
+        band.play_in_venue(venue=venue, date='Nov 22')
+        band.play_in_venue(venue=venue2, date='Nov 27')
 
         assert band.all_introductions()[0] == "Hello NYC!!!!!, we are boygenius and we're from NYC"
         assert band.all_introductions()[1] == "Hello SAC!!!!!, we are boygenius and we're from NYC"

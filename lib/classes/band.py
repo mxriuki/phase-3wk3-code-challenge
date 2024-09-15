@@ -1,24 +1,37 @@
 from classes.concert import Concert
+
 class Band:
-    def  __init__( self, name , hometown):
-        self.name= name
+    def __init__(self, name, hometown):
+        self.name = name
         self.hometown = hometown
-        
+    
     @property
-    def band_name(self):
-        return self._band_name
-    @band_name.setter
-    def band_name(self, name):
-        if isinstance(name, str) and len(name) >= 1 and hasattr(self, "name"):
-            self._band_name = name
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, name):
+        if isinstance(name, str) and len(name) > 0:
+            self._name = name
         else:
-            raise Exception
+            raise Exception("Invalid name")
+    
     @property
-    def band_hometown(self):
-        return self._band_hometown
-    @band_hometown.setter
-    def brand_hometown(self, hometown):
-        if isinstance(hometown, str) and len(hometown) >= 1 and hasattr(self, "hometown"):
-            self._band_hometown = hometown
+    def hometown(self):
+        return self._hometown
+    
+    @hometown.setter
+    def hometown(self, hometown):
+        if isinstance(hometown, str) and len(hometown) > 0:
+            self._hometown = hometown
         else:
-            raise Exception
+            raise Exception("Invalid hometown")
+    
+    def concerts(self):
+        return [concert for concert in Concert.all if concert.band == self]
+    
+    def play_in_venue(self, venue, date):
+        return Concert(date, self, venue)
+    
+    def all_introductions(self):
+        return [concert.introduction() for concert in self.concerts()]
